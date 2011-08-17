@@ -1,0 +1,154 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>matlab_fractal</title>
+      <meta name="generator" content="MATLAB 7.4">
+      <meta name="date" content="2009-07-31">
+      <meta name="m-file" content="matlab_fractal"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content"><pre class="codeinput"><span class="keyword">function</span> [niters,solutions] = matlab_fractal
+<span class="comment">%Create Newton's Method Fractal Image</span>
+<span class="comment">%Tomasz Malisiewcz (tomasz@cmu.edu)</span>
+<span class="comment">%http://quantombone.blogspot.com/</span>
+NITER = 40;
+threshold = .001;
+
+[xs,ys] = meshgrid(-1:.0025:1, -1:.0025:1);
+solutions = xs(:) + i*ys(:);
+select = 1:numel(xs);
+niters = NITER*ones(numel(xs), 1);
+
+<span class="keyword">for</span> iteration = 1:NITER
+  oldi = solutions(select);
+
+  <span class="comment">%in newton's method we have z_{i+1} = z_i - f(z_i) / f'(z_i)</span>
+  solutions(select) = oldi - f(oldi) ./ fprime(oldi);
+
+  <span class="comment">%check for convergence or NaN (division by zero)</span>
+  differ = (oldi - solutions(select));
+  converged = abs(differ) &lt; threshold;
+  problematic = isnan(differ);
+
+  niters(select(converged)) = iteration;
+  niters(select(problematic)) = NITER+1;
+  select(converged | problematic) = [];
+<span class="keyword">end</span>
+
+niters = reshape(niters,size(xs));
+solutions = reshape(solutions,size(xs));
+
+<span class="keyword">function</span> res = f(x)
+res = (x.^2).*x - 1;
+
+<span class="keyword">function</span> res = fprime(x)
+res = 3*x.^2;
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.4<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+function [niters,solutions] = matlab_fractal
+%Create Newton's Method Fractal Image
+%Tomasz Malisiewcz (tomasz@cmu.edu)
+%http://quantombone.blogspot.com/
+NITER = 40;
+threshold = .001;
+
+[xs,ys] = meshgrid(-1:.0025:1, -1:.0025:1);
+solutions = xs(:) + i*ys(:);
+select = 1:numel(xs);
+niters = NITER*ones(numel(xs), 1);
+
+for iteration = 1:NITER
+  oldi = solutions(select);
+  
+  %in newton's method we have z_{i+1} = z_i - f(z_i) / f'(z_i)
+  solutions(select) = oldi - f(oldi) ./ fprime(oldi);
+  
+  %check for convergence or NaN (division by zero)
+  differ = (oldi - solutions(select));
+  converged = abs(differ) < threshold;
+  problematic = isnan(differ);
+  
+  niters(select(converged)) = iteration;
+  niters(select(problematic)) = NITER+1;
+  select(converged | problematic) = [];
+end
+
+niters = reshape(niters,size(xs));
+solutions = reshape(solutions,size(xs));
+
+function res = f(x)
+res = (x.^2).*x - 1;
+
+function res = fprime(x)
+res = 3*x.^2;
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

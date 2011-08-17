@@ -1,0 +1,63 @@
+\documentclass[12pt,letterpaper]{article}
+
+% tomasz malisiewicz
+
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\DeclareMathOperator*{\mycup}{\cup}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\boldbeta}{\boldsymbol\beta}
+\DeclareMathOperator{\dfun}{\boldsymbol w}
+\begin{document}
+
+\title{Newton's Method Fractals}
+
+\author{Tomasz Malisiewicz\\
+Robotics Institute \\
+Carnegie Mellon University\\
+Pittsburgh PA, 15232\\
+{\tt\small tomasz@cmu.edu}
+}
+
+\maketitle
+\abstract{}
+
+\section{Newton's Method}
+Newton's method is an iterative update rule for finding the roots of
+an equation $f(x)=0$.
+\begin{equation}
+x_{i+1} = x_{i} - \frac{f(x_i)}{f'(x_i)}
+\end{equation}
+
+For an arbitrary equation where computing the derivative $f'(x)$ is
+difficult one can use the finite difference approximation
+\begin{equation}
+f'(x) = \frac{f(x+\epsilon)-f(x)}{\epsilon}
+\end{equation}
+
+Polynomials can be expressed two ways.  Directly encoding the zeros we
+write:
+
+\begin{equation}
+f(x) = \prod_{i=1}^K(x-z_i)
+\end{equation}
+
+We can also use the more standard form
+
+\begin{equation}
+f(x) = \sum_{i=0}^K a_i x^i
+\end{equation}
+
+\end{document}
