@@ -13,6 +13,8 @@
 #include "myview.h"
 #include "mycomplex.h"
 
+#include "pngwriter-0.5.4/src/pngwriter.h"
+
 //const unsigned int width = 1024, height = 768;
 //const unsigned int width = 400, height = 300;
 //const unsigned int width = 100, height = 100;
@@ -303,14 +305,36 @@ void TimerFunction(int value)
     glReadPixels(0,0,width,height, GL_RGB, GL_UNSIGNED_BYTE, image);
     
     std::stringstream ss,ss2,ss3;
-    ss<<"imageloop/screenshot"<<std::setw(5)<<std::setfill('0')<<screencounter<<".ppm";
+    ss<<"imageloop/screenshot"<<std::setw(5)<<std::setfill('0')<<screencounter<<".png";
     const char* c = ss.str().c_str(); 
-    writePPM(c,image);
+
+    //write the ppm
+    //writePPM(c,image);
+
+    pngwriter png(width,height,0,c);  //Here we create a PNGwriter instance called png, 
+    // and whose associated file is c
+
+    for (int i = 0; i < width; ++i) {
+      for (int j = 0; j < height; ++j) {
+//        png.plot(i,j,(int)(newton_pixels[i][j][0]*255),(int)(newton_pixels[i][j][1]*255),(int)(newton_pixels[i][j][2]*255));
+        
+//        png.plot(i,j,(int)image[i*height+j+0],(int)image[i*height+j+1],(int)image[i*height+j+2]);
+        int a = (int)(65535*newton_pixels[(j*width+i)*3+0]);
+        //std::cout<<" a is " << a << std::endl;
+        png.plot(i,j,a,(int)(65535*newton_pixels[(j*width+i)*3+1]),(int)(65535*newton_pixels[(j*width+i)*3+2]));
+        
+      }
+    }
+
+      
+    png.setcompressionlevel(5); // To speed things up. Set to 0 for max speed when close()ing the image.
+//   png.setgamma(0.7);
+   png.close();
     
-    ss2<<"convert "<<ss.str()<<" imageloop/screenshot"<<std::setw(5)<<std::setfill('0')<<screencounter<<".png";
-    ss3<<"rm "<<ss.str();
-    system(ss2.str().c_str());
-    system(ss3.str().c_str());
+   //ss2<<"convert "<<ss.str()<<" imageloop/screenshot"<<std::setw(5)<<std::setfill('0')<<screencounter<<".png";
+   //ss3<<"rm "<<ss.str();
+   //system(ss2.str().c_str());
+   //system(ss3.str().c_str());
   }
 
   
