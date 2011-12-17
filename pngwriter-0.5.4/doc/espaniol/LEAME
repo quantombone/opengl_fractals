@@ -163,11 +163,11 @@ del software installado (esto se determina de lo que era PREFIX al
 momento de instalar):
 
 
- -  libpngwriter.a: /usr/local/lib/ 
- -  pngwriter.h: /usr/local/include/ 
- -  documentacion: /usr/local/share/doc/pngwriter/ 
- -  ejemplos: /usr/local/share/doc/pngwriter/ 
- -  fonts: /usr/local/share/pngwriter/fonts/ 
+ -  libpngwriter.a: 
+ -  pngwriter.h: 
+ -  documentacion: 
+ -  ejemplos: 
+ -  fonts: 
 
 
 Mira en examples/ para ver dos ejemplos del uso de PNGwriter, y en

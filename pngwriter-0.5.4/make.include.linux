@@ -34,9 +34,9 @@ CXX=g++
 
 CXXFLAGS= -O3 -Wall -Wno-deprecated $(FT_ARG)
 
-INC=  -I../src/ -I$(PREFIX)/include/
+INC=  -I../src/ -I$(PREFIX)/include/ -I/opt/local/include/
 
-LIBS= -L../src -L$(PREFIX)/lib/ -lz -lpng -lpngwriter
+LIBS= -L../src -L$(PREFIX)/lib/ -lz -lpng -lpngwriter -L/opt/local/lib/
 
 INSTALL=install
 

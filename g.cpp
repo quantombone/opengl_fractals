@@ -18,7 +18,8 @@
 //const unsigned int width = 1024, height = 768;
 //const unsigned int width = 400, height = 300;
 //const unsigned int width = 100, height = 100;
-const unsigned int width = 1280, height = 720; //1920, height = 1080;
+//const unsigned int width = 1280, height = 720; //1920, height = 1080;
+const unsigned int width = 1920, height = 1080;
 //const unsigned int repeat_factor = 1;
 //const double zoom_factor = 1;
 static int screencounter = 1;

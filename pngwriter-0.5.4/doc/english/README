@@ -164,11 +164,11 @@ After installation, the following lines will list the installed
 location of the software (determined from whatever PREFIX was at
 install time):
 
- -  libpngwriter.a: /usr/local/lib/ 
- -  pngwriter.h: /usr/local/include/ 
- -  documentation: /usr/local/share/doc/pngwriter/ 
- -  examples: /usr/local/share/doc/pngwriter/ 
- -  fonts: /usr/local/share/pngwriter/fonts/
+ -  libpngwriter.a: 
+ -  pngwriter.h: 
+ -  documentation: 
+ -  examples: 
+ -  fonts:
 
 Look in examples/ for two examples of PNGwriter's use, and in
 doc/english/EXAMPLES for an explanation.

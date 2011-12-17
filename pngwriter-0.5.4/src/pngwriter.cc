@@ -998,7 +998,7 @@ void pngwriter::close()
    text_ptr[2].text = textdescription_;
    text_ptr[2].compression = PNG_TEXT_COMPRESSION_NONE;
    text_ptr[3].key = "Creation Time";
-   text_ptr[3].text = png_convert_to_rfc1123(png_ptr, &mod_time);
+   text_ptr[3].text = (char*)png_convert_to_rfc1123(png_ptr, &mod_time);
    text_ptr[3].compression = PNG_TEXT_COMPRESSION_NONE;
    text_ptr[4].key = "Software";
    text_ptr[4].text = textsoftware_;
@@ -1293,8 +1293,10 @@ void pngwriter::readfromfile(char * name)
 	  return; 
      } 
    
+   png_uint_32* ppp = (png_uint_32*)(&width);
+   png_uint_32* ppp2 = (png_uint_32*)(&height);
    //Input transformations  
-   png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
+   png_get_IHDR(png_ptr, info_ptr, ppp, ppp2, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
    bit_depth_ = bit_depth; 
    colortype_ = color_type; 
    
@@ -1311,7 +1313,7 @@ void pngwriter::readfromfile(char * name)
    if(color_type == PNG_COLOR_TYPE_GRAY && bit_depth<8) 
      { 
 	// png_set_expand(png_ptr); 
-	png_set_gray_1_2_4_to_8(png_ptr);  // Just an alias of the above.
+	png_set_expand_gray_1_2_4_to_8(png_ptr);  // Just an alias of the above.
 	transformation_ = 1; 
      } 
    
@@ -1341,13 +1343,18 @@ void pngwriter::readfromfile(char * name)
 	 
 	png_read_update_info(png_ptr, info_ptr); 
 	
+        
+        png_uint_32* ppp = (png_uint_32*)(&width);
+        png_uint_32* ppp2 = (png_uint_32*)(&height);        
 	// Just in case any of these have changed?
-	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
+	png_get_IHDR(png_ptr, info_ptr, ppp,ppp2, &bit_depth, &color_type, &interlace_type, NULL, NULL); 
 	bit_depth_ = bit_depth; 
 	colortype_ = color_type; 
      } 
    
-   if(!read_png_image(fp, png_ptr, info_ptr, &image, &width, &height)) 
+   //png_uint_32* ppp = (png_uint_32*)(&width);
+   //png_uint_32* ppp2 = (png_uint_32*)(&height);
+   if(!read_png_image(fp, png_ptr, info_ptr, &image, ppp,ppp2)) 
      { 
 	std::cerr << " PNGwriter::readfromfile - ERROR **: Error opening file " << name << ". read_png_image() failed." << std::endl; 
 	// fp has been closed already if read_png_image() fails. 
@@ -1530,7 +1537,8 @@ int pngwriter::read_png_info(FILE *fp, png_structp *png_ptr, png_infop *info_ptr
 	fclose(fp);
 	return 0;
      }
-   if (setjmp((*png_ptr)->jmpbuf)) /*(setjmp(png_jmpbuf(*png_ptr)) )*//////////////////////////////////////
+//   if (setjmp((*png_ptr)->jmpbuf)) 
+   if ((setjmp(png_jmpbuf(*png_ptr)))) 
      {
 	png_destroy_read_struct(png_ptr, info_ptr, (png_infopp)NULL);
 	std::cerr << " PNGwriter::read_png_info - ERROR **: This file may be a corrupted PNG file. (setjmp(*png_ptr)->jmpbf) failed)." << std::endl;
