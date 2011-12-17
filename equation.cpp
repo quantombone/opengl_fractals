@@ -35,14 +35,27 @@ void radial_zeros_equation::localize_zeros(base_type offset)
     base_type thetanow = (2*M_PI)/NZEROS*i;
     for (int j = 0; j < 1; ++j)
     {
-      base_type radius = (j+1)*1.0f;
+      base_type radius = (j+1)*3.0f;
       //zeros.push_back( (radius + 2*(j==1)*sin(4*offset))* C(cos(thetanow+j*thetadiff + (j==SPINTARGET)*offset),sin(thetanow+j*thetadiff + (j==SPINTARGET)*offset)));
       //zeros.push_back( radius* C(cos(thetanow)*sin(j*thetadiff)+cos(offset),sin(thetanow)*cos(j*thetadiff)+sin(offset)));
-      zeros.push_back(radius*C(cos(thetanow)*sin(offset*10),cos(offset)+sin(thetanow)));
+      zeros.push_back(radius*C(cos(thetanow),sin(thetanow)));
+      //zeros.push_back(radius*C(cos(thetanow)*sin(offset*10),cos(offset)+sin(thetanow)));
       zero_inds.push_back(counter++);
       powers.push_back( 1 );
     }
+
+    zeros[0] = 2+sin(.1*offset)+C(cos(offset),sin(offset));
+    powers[0] = 2;
+    //zeros[1] = 2+cos(.2*offset)+C(cos(offset),sin(offset));
   }
+
+  C mean(0,0);
+  for (int i = 0; i < zeros.size(); ++i)
+    mean = mean + zeros[i];
+  mean = mean * C(1/(double)zeros.size(),0);
+
+  for (int i = 0; i < zeros.size(); ++i)
+    zeros[i] = zeros[i] - mean;
 
   poly_ = polymath::polyrep(zeros);
   deriv_ = polymath::polyderiv(poly_);

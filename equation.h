@@ -98,7 +98,7 @@ public:
                       C& retval)
   {
     // really cool
-    //retval = z*(pow(z,-3.0)-C(1,0))-C(cos(bias),sin(bias));
+    retval = z*(pow(z,-3.0)-C(1,0))-C(cos(bias),sin(bias));
 
     //retval = z*(pow(z,-3.0)-C(1,0))-C(cos(bias),sin(bias));
 
@@ -106,7 +106,9 @@ public:
     //retval = (z*(pow(z,-4.0)-C(.5+2*cos(bias),.5+2*sin(bias))) - (1.0+cos(bias))*C(.2,.3))*C(cos(bias)*sin(bias));
    
     //last thing
-    retval = z*(pow(z,-4.0)-C(cos(1.4*bias)*2,sin(2.3*bias)+cos(bias)))-C(cos(bias),.1+sin(2.3*bias));
+    //retval = z*(pow(z,-4.0)-C(cos(1.4*bias)*2,sin(2.3*bias)+cos(bias)))-C(cos(bias),.1+sin(2.3*bias));
+
+
     
     //retval = pow(z,3)*C(cos(10*bias),sin(10*bias))-C(1,0);
     //retval = (z-C(1,0))*(z-C(-1,0))*(z-C(2*cos(bias),2*sin(bias)));

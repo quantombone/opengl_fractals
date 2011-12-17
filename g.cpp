@@ -16,10 +16,11 @@
 #include "pngwriter-0.5.4/src/pngwriter.h"
 
 //const unsigned int width = 1024, height = 768;
-//const unsigned int width = 400, height = 300;
+const unsigned int width = 400, height = 300;
+//const unsigned int width = 200, height = 150;
 //const unsigned int width = 100, height = 100;
 //const unsigned int width = 1280, height = 720; //1920, height = 1080;
-const unsigned int width = 1920, height = 1080;
+//const unsigned int width = 1920, height = 1080;
 //const unsigned int repeat_factor = 1;
 //const double zoom_factor = 1;
 static int screencounter = 1;
@@ -48,7 +49,7 @@ void imagefill()
   std::cout<<"time: " << *current_time<<std::endl;
 
 
-  if (lasteq->zero_size() > 0)
+  if (0) //(lasteq->zero_size() > 0)
   {
     std::cout<<"sizes are " <<eq->zero_size()<<" and " << lasteq->zero_size()<<std::endl;
     std::vector<std::vector<int> > matrix(eq->zero_size(),std::vector<int>(lasteq->zero_size(),0));
@@ -91,9 +92,9 @@ void imagefill()
       reorders[i] = maxind;
     }
     
-//    std::cout<<"reorders are ";
+// std::cout<<"reorders are ";
     for (int i = 0; i < reorders.size(); ++i)
-      std::cout<<" ri is " << reorders[i] << std::endl;
+      std::cout<<" reorder index is i " << reorders[i] << std::endl;
     
     for (int i = 0; i < dimi; ++i)
     {
@@ -284,7 +285,7 @@ reshape(int w, int h)
 
 void TimerFunction(int value)
 {
-  *current_time = *current_time + .02;
+  *current_time = *current_time + .1;
 
   //if (*current_time == 4)
   //  exit(1);
@@ -372,10 +373,14 @@ int main(int argc, char** argv) {
   fractal = new newton; //(width,height); 
 
   newton_pixels = new float[width*height*3];
-  //eq = new radial_zeros_equation(4);
 
-  eq = new arbitrary_equation;
-  lasteq = new arbitrary_equation;
+
+  //eq = new arbitrary_equation;
+  //lasteq = new arbitrary_equation;
+
+  //eq = new radial_zeros_equation;
+  eq = new radial_zeros_equation(4);
+  lasteq = new radial_zeros_equation(4);
   current_time = new float;
   view = new myview;
 
