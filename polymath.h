@@ -31,7 +31,7 @@ public:
   //              const C& z,
   //              C& result);
 			
-  static void polymath::polyeval(const std::vector<C >&poly,
+  static void polyeval(const std::vector<C >&poly,
                                  const C& z,
                                  C& result)
 {
