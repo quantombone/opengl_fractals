@@ -14,7 +14,9 @@
 #include "mycomplex.h"
 
 //const unsigned int width = 1024, height = 768;
-const unsigned int width = 400, height = 300;
+//const unsigned int width = 400, height = 300;
+//const unsigned int width = 100, height = 100;
+const unsigned int width = 1280, height = 720; //1920, height = 1080;
 //const unsigned int repeat_factor = 1;
 //const double zoom_factor = 1;
 static int screencounter = 1;
@@ -196,10 +198,10 @@ void display()
   glDrawPixels(newwidth,newheight,GL_RGB,GL_FLOAT,newpixels);
   */
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //glClear(GL_COLOR_BUFFER_BIT);
   
-/*
+
 
   int dimi = strength.size();
   int dimj = strength[0].size();
@@ -239,16 +241,16 @@ glBegin(GL_TRIANGLES);
 
     }
   }
-*/
 
-/*
+
+
   glColor3f(0.0, 0.0, 1.0); 
   glVertex3f(0,0,0);
   glColor3f(0.0, 1.0, 0.0); 
   glVertex3f(0,100,0);
   glColor3f(1.0, 0.0, 0.0); 
   glVertex3f(100,0,0);
-*/
+
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glDrawPixels(width,height,GL_RGB,GL_FLOAT,newton_pixels);
@@ -280,7 +282,6 @@ reshape(int w, int h)
 void TimerFunction(int value)
 {
   *current_time = *current_time + .02;
-
 
   //if (*current_time == 4)
   //  exit(1);
@@ -318,24 +319,28 @@ void TimerFunction(int value)
 
 }
 
+void passivemotion(int x, int y)
+{
+  std::cout<<"passive func at x = " << x << " and y = " << y << std::endl;
+}
 
 int main(int argc, char** argv) {
   
-  double ccc;
-  for (int i = 0; i < 100000; ++i)
-  {
-    for (int a = 0; a < 1000; ++a) {
-      if (a % 100 == 0)
-        std::cout<<".";
-      for (int b = 0; b < 100000; ++b)
-      {
-        double c = double(a) + double(b);
-        ccc = c;
-      }
-    }
-    std::cout<<"i = " << i << endl;
-    sleep(1);
-  }
+  // double ccc;
+  // for (int i = 0; i < 100000; ++i)
+  // {
+  //   for (int a = 0; a < 1000; ++a) {
+  //     if (a % 100 == 0)
+  //       std::cout<<".";
+  //     for (int b = 0; b < 100000; ++b)
+  //     {
+  //       double c = double(a) + double(b);
+  //       ccc = c;
+  //     }
+  //   }
+  //   std::cout<<"i = " << i << endl;
+  //   sleep(1);
+  // }
 
 
   //newpixels = new float[width*height*repeat_factor*repeat_factor*3];
@@ -411,12 +416,13 @@ int main(int argc, char** argv) {
   //  for (int j = 0; j < colors[i].size(); ++j)
   //    colors[i][j]/=255.0;
     
+  std::cout<<"about to localize zeros"<<std::endl;
   eq->localize_zeros(*current_time);
   fractal->fill_view(*view);
 
   fractal->newtonfill(*eq,zero_index,strength);  
   imagefill();//zero_index,strength,colors,newton_pixels);
-
+  //std::cout<<"imagefill done"<<std::endl;
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(width, height);
@@ -448,6 +454,7 @@ int main(int argc, char** argv) {
   glPixelTransferi(GL_ALPHA_SCALE, 1);
   glPixelTransferi(GL_ALPHA_BIAS, 0);
 */
+  glutPassiveMotionFunc(passivemotion);
   glutReshapeFunc(reshape);
   glutTimerFunc(10,TimerFunction,0);
   glutMainLoop();

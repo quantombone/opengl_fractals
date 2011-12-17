@@ -118,7 +118,7 @@ void arbitrary_equation::localize_zeros(base_type offset) {
     //remap_zeros(zeros,zero_inds,oldzeros,oldinds);
   }
   
-  std::cout<<"Done localizing zeros: found "<<zeros.size()<<" zeros"<<std::endl;
+  //std::cout<<"Done localizing zeros: found "<<zeros.size()<<" zeros"<<std::endl;
   //std::cout<<"Done localizing zeros: found "<<zero_inds.size()<<" zeros"<<std::endl;
   //for (int i = 0; i < zero_inds.size(); ++i)
   //  std::cout<<"ind is " << zero_inds[i]<<std::endl;

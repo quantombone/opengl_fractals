@@ -27,7 +27,8 @@ int main()
   std::vector<std::complex<double> > zeros;
   std::vector<double> powers;
 
-  generate_zeros(zeros,powers,5);
+  //generate_zeros(zeros,powers,5);
+  generate_zeros(zeros,powers,3);
 
   outfile<<"void newton::run_newton(const complex<double> & start, complex<double>& cur, int & niter){"<<endl;
   outfile<<"cur = start;\n"<<endl;
